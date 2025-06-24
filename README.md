@@ -11,3 +11,8 @@
 	- tops_logs.log         : output of test_mass.py
 
 	- tops_lastcopyonly.log : output of test_mass_islast.py
+
+
+## Status code in pythia8
+
+	![Pythia status](./pythia_status.png)
