@@ -15,4 +15,5 @@
 
 ## Status code in pythia8
 
-	![Pythia status](./pythia_status.png)
+![Pythia status](./pythia_status.png)
+
