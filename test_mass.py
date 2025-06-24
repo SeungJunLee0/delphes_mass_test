@@ -17,15 +17,17 @@ for file_path in file_list:
         status_array = tree["Particle.Status"].array()
 
         # 4. 이벤트 루프
-        for ievt, (pid_evt, mass_evt) in enumerate(zip(pid_array, mass_array)):
+        for ievt, (pid_evt, mass_evt,status_evt) in enumerate(zip(pid_array, mass_array, status_array)):
             # PID가 ±6인 (top quark) 입자 선택
             top_mask = (abs(pid_evt) == 6)
             top_masses = mass_evt[top_mask]
-            top_status = status_array[top_mask]
+            top_status = status_evt[top_mask]
 
             # top quark가 있다면 출력
             if len(top_masses) > 0:
                 print(f"이벤트 {ievt}: top quark mass =", top_masses.tolist())
-                print(f"이벤트 {ievt}: top quark mass =", top_status.tolist())
-            if ievt >=10:
+                print(f"이벤트 {ievt}: top quark mass len =", len(top_masses.tolist()))
+                print(f"이벤트 {ievt}: top quark status =", top_status.tolist())
+                print(f"이벤트 {ievt}: top quark status len =", len(top_status.tolist()))
+            if ievt >=3:
                 break
