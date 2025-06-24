@@ -4,6 +4,7 @@ import glob
 from multiprocessing import Pool, cpu_count
 import os
 from tqdm.contrib.concurrent import process_map  # 👈 요거만 추가
+import sys
 
 widths = [
     "0_80emu",
@@ -47,6 +48,7 @@ def select_width(k):
     all_paths = glob.glob("/data1/powheg/"+widths[nu]+"/root/*.root")
     #all_paths = glob.glob("/data1/powheg/0_80emu/root/*.root")
     file_list = [f for f in all_paths if os.path.basename(f) not in exclude_files]
+    return file_list
 
 # 병렬 처리할 함수 정의
 def process_file(file_path):
@@ -70,12 +72,12 @@ def process_file(file_path):
 
 # 멀티프로세싱 Pool 실행
 if __name__ == "__main__":
-#    with Pool(processes=48) as pool:
-#        results = pool.map(process_file, file_list)
     # process_map으로 병렬 + tqdm
+    nu = sys.argv
     results = process_map(
         process_file,
-        file_list,
+        select_width(int(nu)),
+        #file_list,
         max_workers=48,     # 사용하고 싶은 코어 수
         chunksize=1         # 파일 1개 단위 처리
     )
@@ -84,6 +86,6 @@ if __name__ == "__main__":
     top_mass_output = [mass for sublist in results for mass in sublist]
 
     # 저장
-    with open("top_mass_list_"+widths[k]+".txt", "w") as f:
+    with open("top_mass_list_"+widths[int(nu)]+".txt", "w") as f:
         for mass in top_mass_output:
             f.write(f"{mass}\n")
