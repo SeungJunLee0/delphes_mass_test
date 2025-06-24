@@ -21,7 +21,7 @@ for file_path in file_list:
             # PID가 ±6인 (top quark) 입자 선택
             top_mask = (abs(pid_evt) == 6)
             top_islast = (status_evt == 62)
-            top_final_mask = top_mask #& top_islast
+            top_final_mask = top_mask & top_islast
             top_masses =   mass_evt[top_final_mask]
             top_status = status_evt[top_final_mask]
 
