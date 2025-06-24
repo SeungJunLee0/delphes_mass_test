@@ -20,7 +20,6 @@ widths = [
     "1_70emu",
     "1_80emu",
 ]
-print(widths[1])
 
 def select_width(k):
     nu = k#int(k)
@@ -73,12 +72,18 @@ def process_file(file_path):
 
 # 멀티프로세싱 Pool 실행
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("사용법: python topmass.py <index>")
+        sys.exit(1)
+    nu = int(sys.argv[1])
+    #nu = sys.argv
+    print(widths[nu])
+    
+    file_list = select_width(nu)
     # process_map으로 병렬 + tqdm
-    nu = sys.argv
     results = process_map(
         process_file,
-        select_width(nu),
-        #file_list,
+        file_list,
         max_workers=48,     # 사용하고 싶은 코어 수
         chunksize=1         # 파일 1개 단위 처리
     )
