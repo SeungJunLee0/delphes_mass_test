@@ -20,9 +20,10 @@ widths = [
     "1_70emu",
     "1_80emu",
 ]
+print(widths[1])
 
 def select_width(k):
-    nu = int(k)
+    nu = k#int(k)
     top_mass_output = []
     
     paths = glob.glob("/data1/powheg/"+widths[nu]+"/root/*.root")
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     nu = sys.argv
     results = process_map(
         process_file,
-        select_width(int(nu)),
+        select_width(nu),
         #file_list,
         max_workers=48,     # 사용하고 싶은 코어 수
         chunksize=1         # 파일 1개 단위 처리
@@ -86,6 +87,6 @@ if __name__ == "__main__":
     top_mass_output = [mass for sublist in results for mass in sublist]
 
     # 저장
-    with open("top_mass_list_"+widths[int(nu)]+".txt", "w") as f:
+    with open("top_mass_list_"+widths[nu]+".txt", "w") as f:
         for mass in top_mass_output:
             f.write(f"{mass}\n")
